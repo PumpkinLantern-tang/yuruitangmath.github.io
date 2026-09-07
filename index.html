@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yurui Tang | Graph Theory</title>
+  <meta name="description" content="Yurui Tang, East China Normal University. Research in structural and extremal graph theory, Hamiltonicity, cycles, paths, subdivisions, and Turán-type problems.">
+  <meta name="author" content="Yurui Tang">
+  <link rel="canonical" href="https://yuruitangmath.github.io/">
+  <meta name="theme-color" content="#174772">
+  <!-- 页面样式已包含在此文件中，无需另传 CSS、JavaScript、图片或字体文件。 -->
+  <style>
+    :root { color-scheme: light; --ink:#182a3b; --muted:#53657a; --blue:#174772; --line:#dce4ed; --soft:#f3f6fa; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:2rem; }
+    body { margin:0; color:var(--ink); background:#fff; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif; font-size:17px; line-height:1.7; }
+    a { color:var(--blue); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:#092e50; }
+    a:focus-visible, summary:focus-visible { outline:3px solid #4675b1; outline-offset:5px; border-radius:2px; }
+    .skip-link { position:absolute; left:1rem; top:-5rem; z-index:10; padding:.5rem 1rem; background:white; }
+    .skip-link:focus { top:1rem; }
+    .layout { width:min(1180px,100%); margin:0 auto; display:grid; grid-template-columns:275px minmax(0,1fr); gap:64px; padding:66px 32px 36px; }
+    .profile { align-self:start; position:sticky; top:38px; border-top:4px solid var(--blue); padding-top:23px; }
+    .profile h1 { font-family:Georgia,"Times New Roman",serif; font-size:2.5rem; line-height:1.13; font-weight:500; letter-spacing:-.03em; margin:0 0 10px; }
+    .degree { color:var(--muted); margin:0 0 25px; font-size:1rem; }
+    .affiliation { font-size:1rem; line-height:1.7; margin:0 0 28px; }
+    nav { display:flex; flex-direction:column; gap:6px; margin:0 0 30px; }
+    nav a { font-size:1rem; padding:3px 0; text-decoration:none; }
+    nav a:hover { text-decoration:underline; }
+    .contact { border-top:1px solid var(--line); padding-top:22px; }
+    .contact h2 { margin:0 0 10px; font-family:inherit; font-size:.875rem; letter-spacing:.09em; text-transform:uppercase; font-weight:600; color:var(--muted); }
+    .contact a { display:block; font-size:.9rem; overflow-wrap:anywhere; margin-bottom:6px; }
+    .orcid { margin-top:19px; }
+    .contact small { display:block; color:var(--muted); font-size:.875rem; }
+    main { min-width:0; }
+    .intro { padding-bottom:31px; border-bottom:1px solid var(--line); }
+    h2 { font-family:Georgia,"Times New Roman",serif; font-weight:500; font-size:1.85rem; line-height:1.3; margin:0 0 16px; }
+    p { margin:0 0 15px; }
+    .research-topics { margin:12px 0 0; padding-left:21px; }
+    .research-topics li { padding-left:4px; margin:5px 0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:18px; margin:37px 0 10px; }
+    .section-heading h2 { margin:0; }
+    .section-heading .count { color:var(--muted); white-space:nowrap; font-size:.9rem; }
+    .section-note { color:var(--muted); font-size:.9rem; margin:0 0 23px; }
+    .publication-year { margin:25px 0 30px; }
+    .year-heading { display:flex; align-items:baseline; gap:15px; padding-bottom:11px; border-bottom:2px solid var(--ink); }
+    .year-heading h3 { margin:0; font-size:1.22rem; font-weight:600; }
+    .year-heading > span { color:var(--muted); font-size:.875rem; }
+    .paper-entry { border-bottom:1px solid var(--line); }
+    .paper-entry summary { list-style:none; display:grid; grid-template-columns:22px minmax(0,1fr) 24px; gap:13px; align-items:start; padding:22px 0; cursor:pointer; }
+    .paper-entry summary::-webkit-details-marker { display:none; }
+    .paper-entry summary:hover .paper-title { color:var(--blue); }
+    .paper-number { font-size:.875rem; color:var(--muted); line-height:1.8; padding-top:1px; font-variant-numeric:tabular-nums; }
+    .paper-main { min-width:0; }
+    .paper-title { display:block; font-size:1.07rem; line-height:1.5; font-weight:600; margin-bottom:7px; overflow-wrap:break-word; }
+    .authors { display:block; font-size:.94rem; line-height:1.55; color:var(--muted); margin-bottom:9px; }
+    .authors strong { font-weight:500; color:var(--ink); }
+    .paper-venue-line { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 9px; font-size:.875rem; line-height:1.65; }
+    .venue { color:var(--muted); }
+    .status-badge { display:inline-block; font-size:.8125rem; line-height:1.6; border-radius:3px; padding:1px 7px; }
+    .published { background:#e8f0f8; color:#174772; }
+    .preprint { background:#f0f2f5; color:#4b596b; }
+    .expand-icon { display:flex; justify-content:center; align-items:center; height:24px; line-height:1; color:var(--blue); font-size:1.4rem; transition:transform .15s; }
+    .paper-entry[open] .expand-icon { transform:rotate(45deg); }
+    .paper-details { margin:0 0 24px 35px; padding:21px 23px; background:var(--soft); border-left:2px solid #8ba7c2; }
+    .paper-details h4 { margin:0 0 9px; font-size:.875rem; font-weight:600; color:var(--blue); }
+    .paper-details p { font-size:1rem; line-height:1.85; overflow-wrap:break-word; }
+    .math { font-family:"Cambria Math","STIX Two Math","Times New Roman",serif; }
+    sub,sup { font-size:.75em; line-height:0; }
+    .display-math { padding:6px 0 20px; overflow-x:auto; }
+    math { font-size:1.15em; }
+    .paper-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:19px; }
+    .paper-button { padding:5px 13px; min-height:38px; font-size:.875rem; border:1px solid #aabed2; border-radius:4px; text-decoration:none; background:white; }
+    .paper-button:hover { border-color:var(--blue); background:#e8f0f8; }
+    footer { border-top:1px solid var(--line); margin-top:46px; padding-top:19px; color:var(--muted); font-size:.875rem; }
+    @media(max-width:950px) { .layout { grid-template-columns:240px minmax(0,1fr); gap:35px; padding:44px 25px; } .profile h1 { font-size:2.15rem; } }
+    @media(max-width:720px) {
+      .layout { display:block; padding:28px 20px; }
+      .profile { position:static; margin-bottom:35px; padding-top:19px; }
+      .profile h1 { font-size:2.5rem; }
+      .degree { margin-bottom:14px; }
+      .affiliation { margin-bottom:18px; }
+      nav { flex-direction:row; flex-wrap:wrap; gap:6px 20px; margin-bottom:22px; }
+      .contact { display:grid; grid-template-columns:1fr; }
+      .orcid { margin-top:10px; }
+      .section-heading { gap:10px; flex-wrap:wrap; }
+      .paper-entry summary { grid-template-columns:18px minmax(0,1fr) 20px; gap:9px; }
+      .paper-details { margin-left:0; padding:18px 16px; }
+      h2 { font-size:1.65rem; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .expand-icon { transition:none; } }
+    @media print { .layout { display:block; padding:0; } .profile { position:static; } nav,.skip-link,.expand-icon { display:none; } .contact { margin-bottom:25px; } .paper-entry { break-inside:avoid; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="layout">
+    <!-- ==================== 个人信息：在此修改 ==================== -->
+    <aside class="profile" aria-label="Profile and navigation">
+      <h1>Yurui Tang</h1>
+      <p class="degree">Ph.D.</p>
+      <p class="affiliation">School of Mathematics<br>East China Normal University</p>
+      <nav aria-label="Main navigation">
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#preprints">Preprints</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <section class="contact" id="contact" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact</h2>
+        <a href="mailto:tyr2290@163.com">tyr2290@163.com</a>
+        <a href="mailto:52290155027@stu.ecnu.edu.cn">52290155027@stu.ecnu.edu.cn</a>
+        <div class="orcid"><small>ORCID</small>
+          <a href="https://orcid.org/0009-0008-7220-7883" target="_blank" rel="noopener noreferrer">0009-0008-7220-7883</a>
+        </div>
+      </section>
+    </aside>
+    <main id="main">
+      <section class="intro" id="research" aria-labelledby="research-heading">
+        <h2 id="research-heading">Research</h2>
+        <p>My research interests lie in <strong>structural graph theory</strong> and <strong>extremal graph theory</strong>. In particular, I work on:</p>
+        <ul class="research-topics">
+          <li>Hamiltonicity, cycles and paths, and their lengths;</li>
+          <li>Subdivisions in graphs;</li>
+          <li>Turán numbers and generalized Turán problems.</li>
+        </ul>
+      </section>
+
+      <!-- ==================== 已发表：按正式卷期年份分类 ==================== -->
+      <section id="publications" aria-labelledby="publications-heading">
+        <div class="section-heading"><h2 id="publications-heading">Publications</h2><span class="count">2 papers</span></div>
+        <p class="section-note">Select a paper to view its abstract and links.</p>
+        <section class="publication-year" aria-labelledby="published-2026">
+          <div class="year-heading"><h3 id="published-2026">2026</h3><span>2 publications</span></div>
+          <div class="paper-list">
+<!-- 已发表论文 1：标题、作者、期刊、摘要和链接均可直接修改。 -->
+    <details class="paper-entry" id="fractional-matching-cliques">
+      <summary>
+        <span class="paper-number">1</span>
+        <span class="paper-main">
+          <span class="paper-title">The maximum number of cliques in graphs with given fractional matching number and minimum degree</span>
+          <span class="authors">Chengli Li, <strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line"><span class="status-badge published">Published</span>
+          <span class="venue"><em>Discrete Applied Mathematics</em> 379 (2026), 390–399</span></span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>Recently, Ma, Qian and Shi determined the maximum size of an n-vertex graph with given fractional matching number s and maximum degree at most d. Motivated by this result, we determine the maximum number of ℓ-cliques in a graph with given fractional matching number and minimum degree, which generalizes Shi and Ma’s result about the maximum size of a graph with given fractional matching number and minimum degree at least one. We also determine the maximum number of complete bipartite graphs in a graph with prescribed fractional matching number and minimum degree.</p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://doi.org/10.1016/j.dam.2025.09.010" target="_blank" rel="noopener noreferrer">Journal / DOI</a>
+          <a class="paper-button" href="papers/fractional-matching-cliques.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+<!-- 已发表论文 2：标题、作者、期刊、摘要和链接均可直接修改。 -->
+    <details class="paper-entry" id="sparse-graphs-minimum-vertex-cut">
+      <summary>
+        <span class="paper-number">2</span>
+        <span class="paper-main">
+          <span class="paper-title">Sparse graphs with an independent or foresty minimum vertex cut</span>
+          <span class="authors">Kun Cheng, <strong>Yurui Tang</strong>, Xingzhi Zhan</span>
+          <span class="paper-venue-line"><span class="status-badge published">Published</span>
+          <span class="venue"><em>Discrete Mathematics</em> 349 (2026), 114658</span></span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>A connected graph is called fragile if it contains an independent vertex cut. In 2002 Chen and Yu proved that every connected graph of order n and size at most 2n − 4 is fragile, and in 2013 Le and Pfender characterized the non-fragile graphs of order n and size 2n − 3. It is natural to consider minimum vertex cuts. We prove two results. (1) Every connected graph of order n with n ≥ 7 and size at most ⌊3n/2⌋ has an independent minimum vertex cut; (2) every connected graph of order n with n ≥ 7 and size at most 2n has a foresty minimum vertex cut. Both results are best possible.</p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://doi.org/10.1016/j.disc.2025.114658" target="_blank" rel="noopener noreferrer">Journal / DOI</a>
+          <a class="paper-button" href="papers/sparse-graphs-minimum-vertex-cut.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+          </div>
+        </section>
+      </section>
+      <!-- ==================== 未发表：按预印本年份分类 ==================== -->
+      <section id="preprints" aria-labelledby="preprints-heading">
+        <div class="section-heading"><h2 id="preprints-heading">Preprints</h2><span class="count">8 papers</span></div>
+<!-- ======================= 2026 ======================= -->
+
+<section class="publication-year" aria-labelledby="preprint-2026">
+  <div class="year-heading">
+    <h3 id="preprint-2026">2026</h3>
+    <span>4 preprints</span>
+  </div>
+
+  <div class="paper-list">
+
+    <!-- 2026-1 -->
+    <details class="paper-entry" id="preprint-1">
+      <summary>
+        <span class="paper-number">1</span>
+        <span class="paper-main">
+          <span class="paper-title">Nonhamiltonian regular sublinear expanders</span>
+          <span class="authors">Chengli Li, <strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2608.26718, 2026</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          Letzter, Methuku and Sudakov proved that sufficiently regular sublinear expanders
+          contain nearly spanning cycles and paths. Montgomery subsequently conjectured that
+          every regular sublinear expander of sufficiently large degree is hamiltonian.
+          Recently, Chen, Liu, Wei and Yang disproved this conjecture by constructing
+          <span class="math">d</span>-regular sublinear expanders of order <span class="math">n</span> with
+          <span class="math">d = (1/2 + o(1)) log<sup>2</sup> n</span> and small circumference. They further posed the problem
+          of determining whether, for every fixed <span class="math">ε &gt; 0</span>, there exists a
+          constant <span class="math">C = C(ε)</span> such that every sufficiently large <span class="math">n</span>-vertex
+          <span class="math">d</span>-regular <span class="math">(ε, d)</span>-expander with <span class="math">d ≥ C log<sup>2</sup> n</span> is hamiltonian.
+          We answer this problem negatively by constructing, for every sufficiently small
+          fixed <span class="math">ε &gt; 0</span>, infinitely many nonhamiltonian <span class="math">d</span>-regular
+          <span class="math">(ε, d)</span>-expanders with degrees far above the <span class="math">log<sup>2</sup> n</span> scale.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2608.26718" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/nonhamiltonian-regular-sublinear-expanders.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2026-2 -->
+    <details class="paper-entry" id="preprint-2">
+      <summary>
+        <span class="paper-number">2</span>
+        <span class="paper-main">
+          <span class="paper-title">
+            Characterizing forbidden induced subgraphs that force top vertices to be Gallai vertices
+          </span>
+          <span class="authors"><strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2608.12848, 2026</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          A vertex of a graph is called a top vertex if it has maximum degree in the graph.
+          A vertex of a graph is called a Gallai vertex if it belongs to every longest path
+          of the graph. Golan and Shan proved that every top vertex of any connected
+          induced-<span class="math">2P<sub>2</sub></span>-free graph is a Gallai vertex. Long, Milans, and Munaro
+          subsequently showed that if every connected induced-<span class="math">H</span>-free graph has a Gallai
+          vertex, then <span class="math">H</span> must be a linear forest of order at most nine. They also proved
+          that, for every linear forest <span class="math">H</span> of order at most four, every top vertex of any
+          connected induced-<span class="math">H</span>-free graph is a Gallai vertex. In this paper, we determine
+          the graphs <span class="math">H</span> for which every top vertex of any connected induced-<span class="math">H</span>-free
+          graph is a Gallai vertex. Our result shows that this holds precisely when <span class="math">H</span> is
+          a linear forest of order at most four or <span class="math">H = P<sub>3</sub> + 2P<sub>1</sub></span>.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2608.12848" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/gallai-top-vertices-induced-subgraphs.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2026-3 -->
+    <details class="paper-entry" id="preprint-3">
+      <summary>
+        <span class="paper-number">3</span>
+        <span class="paper-main">
+          <span class="paper-title">Weakly pancyclic vertices in dense nonbipartite graphs</span>
+          <span class="authors"><strong>Yurui Tang</strong>, Xingzhi Zhan</span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2601.15822, 2026</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          Let <span class="math">G</span> be a graph of girth <span class="math">g</span> and circumference <span class="math">c</span>.
+          A vertex <span class="math">v</span> of <span class="math">G</span> is called weakly pancyclic if <span class="math">v</span> lies on an
+          <span class="math">ℓ</span>-cycle for every integer <span class="math">ℓ</span> with <span class="math">g ≤ ℓ ≤ c</span>.
+          We prove that if <span class="math">G</span> is a nonbipartite graph of order <span class="math">n ≥ 5</span> and
+          size at least <span class="math">⌊(n − 1)<sup>2</sup>/4⌋ + 2</span>, then <span class="math">G</span> contains three
+          weakly pancyclic vertices, with one exception. This strengthens a result
+          of Brandt from 1997. We also pose a related problem.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2601.15822" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/weakly-pancyclic-vertices.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2026-4: no arXiv identifier appears in the supplied manuscript -->
+    <details class="paper-entry" id="preprint-4">
+      <summary>
+        <span class="paper-number">4</span>
+        <span class="paper-main">
+          <span class="paper-title">On the large-clique version of the Erdős–Sós conjecture</span>
+          <span class="authors">Kun Cheng, <strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">Manuscript, 2026</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          For graphs <span class="math">H</span> and <span class="math">F</span>, let <span class="math">ex(n, H, F)</span> denote the
+          maximum number of copies of <span class="math">H</span> in an <span class="math">F</span>-free graph of order <span class="math">n</span>.
+          Motivated by the Erdős–Sós conjecture, Gerbner and Palmer and,
+          independently, Zhao and Peng conjectured that for every tree <span class="math">T</span> of order
+          <span class="math">k</span> and every <span class="math">3 ≤ r ≤ k − 1</span>,
+          </p><div class="display-math">
+  <math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="ex of n, K r, T equals a times k minus one choose r plus b choose r">
+    <mrow><mi mathvariant="normal">ex</mi><mo>(</mo><mi>n</mi><mo>,</mo><msub><mi>K</mi><mi>r</mi></msub><mo>,</mo><mi>T</mi><mo>)</mo><mo>=</mo>
+    <mi>a</mi><mo>(</mo><mfrac linethickness="0"><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow><mi>r</mi></mfrac><mo>)</mo><mo>+</mo>
+    <mo>(</mo><mfrac linethickness="0"><mi>b</mi><mi>r</mi></mfrac><mo>)</mo><mo>,</mo></mrow>
+  </math></div><p>
+          where <span class="math">n = a(k − 1) + b</span> with <span class="math">0 ≤ b &lt; k − 1</span>. In this paper, we confirm
+          the conjecture for <span class="math">r ≥ ⌈(2k − 1)/3⌉</span> and characterize all
+          extremal graphs.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="papers/large-clique-erdos-sos.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+
+
+<!-- ======================= 2025 ======================= -->
+
+<section class="publication-year" aria-labelledby="preprint-2025">
+  <div class="year-heading">
+    <h3 id="preprint-2025">2025</h3>
+    <span>4 preprints</span>
+  </div>
+
+  <div class="paper-list">
+
+    <!-- 2025-1 -->
+    <details class="paper-entry" id="preprint-5">
+      <summary>
+        <span class="paper-number">5</span>
+        <span class="paper-main">
+          <span class="paper-title">
+            Extending two results on hamiltonian graphs involving the bipartite-hole-number
+          </span>
+          <span class="authors">Kun Cheng, <strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2511.16099, 2025</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          The bipartite-hole-number of a graph <span class="math">G</span>, denoted by
+          <span class="math">α̃(G)</span>, is the minimum number <span class="math">k</span> such that there exist
+          positive integers <span class="math">s</span> and <span class="math">t</span> with <span class="math">s + t = k + 1</span> with the property
+          that for any two disjoint sets <span class="math">A, B ⊆ V(G)</span> with
+          <span class="math">|A| = s</span> and <span class="math">|B| = t</span>, there is an edge between <span class="math">A</span> and <span class="math">B</span>.
+          In this paper, we first prove that any 2-connected graph <span class="math">G</span> satisfying
+          <span class="math">d<sub>G</sub>(x) + d<sub>G</sub>(y) ≥ 2α̃(G) − 2</span> for every pair of non-adjacent
+          vertices <span class="math">x,y</span> is hamiltonian except for a special family of graphs,
+          thereby extending results of Li and Liu (2025), and Ellingham, Huang and
+          Wei (2025). We then establish a stability version of a theorem by
+          McDiarmid and Yolov (2017): every graph whose minimum degree is at least
+          its bipartite-hole-number minus one is hamiltonian except for a special
+          family of graphs.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2511.16099" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/hamiltonian-bipartite-hole-number.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2025-2 -->
+    <details class="paper-entry" id="preprint-6">
+      <summary>
+        <span class="paper-number">6</span>
+        <span class="paper-main">
+          <span class="paper-title">
+            The circumference of a graph with given minimum degree and clique number
+          </span>
+          <span class="authors">Na Chen, <strong>Yurui Tang</strong></span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2510.26233, 2025</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          The circumference <span class="math">c(G)</span> of a graph <span class="math">G</span> is the length of its
+          longest cycle. Let <span class="math">δ(G)</span> and <span class="math">ω(G)</span> denote the minimum
+          degree and the clique number of <span class="math">G</span>, respectively. In <em>Electronic Journal of Combinatorics</em> 31(4) (2024), #P4.65, Yuan proved that
+          if <span class="math">G</span> is a 2-connected graph of order <span class="math">n</span>, then
+          <span class="math">c(G) ≥ min{n, ω(G) + δ(G)}</span> unless <span class="math">G</span> is one of two
+          specific graphs. In this paper, we prove a stability result for the
+          theorem of Erdős and Gallai, thereby helping us to characterize all
+          2-connected non-hamiltonian graphs whose circumference equals the sum
+          of their clique number and minimum degree. Combining this with Yuan's
+          result, one can deduce that if <span class="math">G</span> is a 2-connected graph of order
+          <span class="math">n</span>, then
+          <span class="math">c(G) ≥ min{n, ω(G) + δ(G) + 1}</span>, unless <span class="math">G</span> belongs to
+          certain specified graph classes.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2510.26233" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/circumference-minimum-degree-clique-number.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2025-3 -->
+    <details class="paper-entry" id="preprint-7">
+      <summary>
+        <span class="paper-number">7</span>
+        <span class="paper-main">
+          <span class="paper-title">
+            Cycles and paths through vertices whose degrees are at least the bipartite-hole-number
+          </span>
+          <span class="authors">
+            Chengli Li, Feng Liu, <strong>Yurui Tang</strong>
+          </span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2506.09750, 2025</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          The bipartite-hole-number of a graph <span class="math">G</span>, denoted by
+          <span class="math">α̃(G)</span>, is the minimum integer <span class="math">k</span> such that there exist
+          positive integers <span class="math">s</span> and <span class="math">t</span> with <span class="math">s + t = k + 1</span>, satisfying the
+          property that for any two disjoint sets <span class="math">A, B ⊆ V(G)</span> with
+          <span class="math">|A| = s</span> and <span class="math">|B| = t</span>, there is at least one edge between <span class="math">A</span> and
+          <span class="math">B</span>. In 1992, Bollobás and Brightwell, and independently Shi, proved
+          that every 2-connected graph of order <span class="math">n</span> contains a cycle passing
+          through all vertices whose degrees are at least <span class="math">n/2</span>. Motivated by
+          their result, we show that in any 2-connected graph of order <span class="math">n</span>,
+          there exists a cycle containing all vertices whose degrees are at
+          least <span class="math">α̃(G)</span>. Moreover, we prove that for any pair of vertices
+          in a connected graph <span class="math">G</span>, if their degrees are at least
+          <span class="math">α̃(G) + 1</span>, then there exists a path joining them that contains
+          all vertices whose degrees are at least <span class="math">α̃(G) + 1</span>. The results
+          extend two existing ones.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2506.09750" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/cycles-paths-bipartite-hole-number.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- 2025-4 -->
+    <details class="paper-entry" id="preprint-8">
+      <summary>
+        <span class="paper-number">8</span>
+        <span class="paper-main">
+          <span class="paper-title">The minimum size of a <span class="math">k</span>-connected locally nonforesty graph</span>
+          <span class="authors">
+            Chengli Li, <strong>Yurui Tang</strong>, Xingzhi Zhan
+          </span>
+          <span class="paper-venue-line">
+            <span class="status-badge preprint">Preprint</span>
+            <span class="venue">arXiv:2501.13980, 2025</span>
+          </span>
+        </span>
+        <span class="expand-icon" aria-hidden="true">+</span>
+      </summary>
+
+      <div class="paper-details">
+        <h4>Abstract</h4>
+        <p>
+          A local subgraph of a graph is the subgraph induced by the neighborhood
+          of a vertex. Thus a graph of order <span class="math">n</span> has <span class="math">n</span> local subgraphs.
+          A graph <span class="math">G</span> is called locally nonforesty if every local subgraph of
+          <span class="math">G</span> contains a cycle. Clearly, a graph is locally nonforesty if and
+          only if every vertex of the graph is the hub of a wheel. We determine
+          the minimum size of a <span class="math">k</span>-connected locally nonforesty graph of order
+          <span class="math">n</span>.
+        </p>
+        <div class="paper-actions">
+          <a class="paper-button" href="https://arxiv.org/abs/2501.13980" target="_blank" rel="noopener noreferrer">arXiv</a>
+          <a class="paper-button" href="papers/k-connected-locally-nonforesty.pdf" target="_blank" rel="noopener noreferrer">PDF</a>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+      </section>
+      <footer>© 2026 Yurui Tang · East China Normal University</footer>
+    </main>
+  </div>
+</body>
+</html>
